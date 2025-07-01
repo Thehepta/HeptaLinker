@@ -70,4 +70,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
+tasks.configureEach {
+    // 判断是否是 publish 类型的任务
+    val isPublishTask = gradle.startParameter.taskNames.any {
+        it.contains("publish", ignoreCase = true)
+    }
+    // 如果是 publish 类型任务，跳过当前模块所有任务
+    onlyIf {
+        !isPublishTask
+    }
+}
 

@@ -15,7 +15,7 @@ android {
             cmake {
                 arguments ("-DANDROID_STL=c++_shared")
 //
-////                abiFilters ("armeabi-v7a", "arm64-v8a")
+                abiFilters ("armeabi-v7a", "arm64-v8a")
 //
             }
         }
@@ -56,7 +56,7 @@ afterEvaluate {
                 create<MavenPublication>("release") {
                     groupId = "com.github.Thehepta"
                     artifactId = "HeptaLinker"
-                    version = "0.0.6"
+                    version = "0.0.1"
 
                     // 指定 AAR 文件路径
                     artifact(tasks.named("bundleReleaseAar"))
