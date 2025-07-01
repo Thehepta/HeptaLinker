@@ -25,7 +25,10 @@ android {
         }
 
     }
-
+    buildFeatures {
+        viewBinding = true
+        prefab = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -49,10 +52,7 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
-        prefab = true
-    }
+
     ndkVersion = "27.0.12077973"
 }
 

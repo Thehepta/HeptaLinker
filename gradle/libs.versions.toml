@@ -1,6 +1,6 @@
 [versions]
 agp = "8.6.0"
-heptalinker = "0.0.7"
+heptalinker = "0.0.2"
 kotlin = "1.9.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -22,8 +22,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-jsoncpp = { group = "com.android.ndk.thirdparty", name = "jsoncpp", version.ref = "jsoncpp" }
-dobby = { group = "io.github.vvb2060.ndk", name = "dobby", version.ref = "dobby" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

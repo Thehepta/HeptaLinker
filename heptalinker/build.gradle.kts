@@ -10,11 +10,10 @@ android {
     buildToolsVersion = "35.0.0"
     ndkVersion = "27.0.12077973"
     defaultConfig {
-        minSdk = 28
+        minSdk = 26
         externalNativeBuild {
             cmake {
                 arguments ("-DANDROID_STL=c++_shared")
-//
                 abiFilters ("armeabi-v7a", "arm64-v8a")
 //
             }
@@ -56,7 +55,7 @@ afterEvaluate {
                 create<MavenPublication>("release") {
                     groupId = "com.github.Thehepta"
                     artifactId = "HeptaLinker"
-                    version = "0.0.1"
+                    version = "0.0.2"
 
                     // 指定 AAR 文件路径
                     artifact(tasks.named("bundleReleaseAar"))
