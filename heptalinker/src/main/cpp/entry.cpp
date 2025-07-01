@@ -235,7 +235,7 @@ jobject hideLoadApkModule(JNIEnv *env, mz_zip_archive& zip_archive){
     auto byte_buffer_class = env->FindClass("java/nio/ByteBuffer");
 
 
-    std::unordered_map<const soinfo*, ElfReader> readers_map;
+    ElfReader readers_map;
     std::vector<LoadTask*> load_tasks;
     std::vector<jobject> load_dexs;
 
@@ -263,7 +263,7 @@ jobject hideLoadApkModule(JNIEnv *env, mz_zip_archive& zip_archive){
                 return nullptr;
             }
 
-            LoadTask* task =  new LoadTask(file_stat.m_filename, nullptr, nullptr, &readers_map);
+            LoadTask* task =  new LoadTask(file_stat.m_filename, nullptr, nullptr, readers_map);
             task->set_fd(fd, false);
             task->set_file_offset(0);
             task->set_file_size(file_stat.m_uncomp_size);
@@ -417,7 +417,7 @@ void Class_DexFile_Merge(JNIEnv *env,  char *apkSource, jobject classloader){
 }
 
 void *custom_dlopen(int fd){
-    std::unordered_map<const soinfo*, ElfReader> readers_map;
+    ElfReader readers_map;
     struct stat st;
     if(fstat(fd,&st) == -1){
         perror("custom_dlopen: open failed ");
@@ -425,7 +425,7 @@ void *custom_dlopen(int fd){
         return nullptr;
     }
 
-    LoadTask* task =  new LoadTask("file_data", nullptr, nullptr, &readers_map);
+    LoadTask* task =  new LoadTask("file_data", nullptr, nullptr, readers_map);
     task->set_fd(fd, false);
     task->set_file_offset(0);
     task->set_file_size(st.st_size);
@@ -456,7 +456,6 @@ void *custom_dlopen(int fd){
 
 void *custom_dlopen(const char *file_path){
 
-    std::unordered_map<const soinfo*, ElfReader> readers_map;
     int fd = open(file_path, O_RDWR);
     struct stat st;
     if(fstat(fd,&st) == -1){

@@ -45,7 +45,7 @@ public:
     LoadTask(const char* name,
              soinfo* needed_by,
              android_namespace_t* start_from,
-             std::unordered_map<const soinfo*, ElfReader>* readers_map)
+             ElfReader &readers_map)
             : name_(name), needed_by_(needed_by), si_(nullptr),
               fd_(-1), close_fd_(false), file_offset_(0), elf_readers_map_(readers_map),
               is_dt_needed_(false), start_from_(start_from) {}
@@ -53,10 +53,6 @@ public:
     // returns the namespace from where we need to start loading this.
     const android_namespace_t* get_start_from() const {
         return start_from_;
-    }
-
-    std::unordered_map<const soinfo*, ElfReader>* get_readers_map() {
-        return elf_readers_map_;
     }
 
     soinfo* get_soinfo() const {
@@ -112,12 +108,10 @@ public:
         close_fd_ = assume_ownership;
     }
 
-    void add_elf_readers_map(const soinfo* si, ElfReader elfReader){
-        elf_readers_map_->emplace(si,elfReader);
-    }
+
 
     ElfReader& get_elf_reader() {
-        return (*elf_readers_map_)[si_];
+        return elf_readers_map_;
     }
 
 
@@ -146,7 +140,7 @@ private:
     bool close_fd_;
     off64_t file_offset_;
     off64_t file_size_;
-    std::unordered_map<const soinfo*, ElfReader>* elf_readers_map_;
+    ElfReader elf_readers_map_;
     // TODO(dimitry): needed by workaround for http://b/26394120 (the grey-list)
     bool is_dt_needed_;
 

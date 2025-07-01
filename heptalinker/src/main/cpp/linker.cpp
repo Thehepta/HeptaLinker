@@ -22,12 +22,15 @@
 std::vector<soinfo*> g_hepta_soinfo_list;
 std::vector<soinfo*> g_system_soinfo_list;
 
-
-void heptalinker_add_soinfo(soinfo* si){
+void add_system_soinfo(soinfo* si){
     g_hepta_soinfo_list.push_back(si);
 }
 
-bool heptalinker_remove_soinfo(soinfo* si){
+void add_hepta_soinfo(soinfo* si){
+    g_hepta_soinfo_list.push_back(si);
+}
+
+bool remove_hepta_soinfo(soinfo* si){
     auto it = std::find(g_hepta_soinfo_list.begin(), g_hepta_soinfo_list.end(), si);
     if (it != g_hepta_soinfo_list.end()) {
         g_hepta_soinfo_list.erase(it); // 删除第一个匹配的元素
@@ -36,7 +39,7 @@ bool heptalinker_remove_soinfo(soinfo* si){
     return false;
 }
 
-soinfo*  heptalinker_find_loadlibrary(const char * libname){
+soinfo*  find_hepta_loadlibrary(const char * libname){
 
     int length = strlen(libname);
     for (soinfo* si : g_hepta_soinfo_list) {
@@ -163,14 +166,14 @@ soinfo* find_containing_library(const void* p) {
 
 soinfo* find_library(const char *soname) {
 
-    soinfo *hlsi = heptalinker_find_loadlibrary(soname);
+    soinfo *hlsi = find_hepta_loadlibrary(soname);
     if(hlsi == nullptr){
         hlsi = find_system_library_byname(soname);
         if(hlsi != nullptr){
             soinfo *custom_si  = new soinfo();
             custom_si->set_soname(soname);
             custom_si->transform(hlsi);
-            heptalinker_add_soinfo(custom_si);
+            add_system_soinfo(custom_si);
             return custom_si;
         }
 
